@@ -34,7 +34,8 @@ sudo echo -n "dtparam=i2c_arm=on" >> /boot/config.txt
 #j'ai utilisé sed pour ecrire cette ligne avant la derniere ligne de (exist 0) dans le fichier /etc/rc.local
 echo "======================================"
 #sudo sed -i '19ish /home/pi/Lcd_project/lance_thread.sh &' /etc/rc.local
-sudo sed -i "19ish $FILEPATH/lance_thread.sh &" /etc/rc.local
+ligne=`wc -l /etc/rc.local | cut -f1 -d' '`
+sudo sed -i "${ligne}ish $FILEPATH/lance_thread.sh &" /etc/rc.local
 echo "sudo python $FILEPATH/main.py" >> $FILEPATH/lance_thread.sh
 
 sudo reboot
