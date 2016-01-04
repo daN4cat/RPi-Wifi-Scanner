@@ -10,9 +10,6 @@
 
 from Adafruit_I2C import Adafruit_I2C
 from time import sleep
-from os import system , path
-import glob
-import re
 
 
 class Adafruit_CharLCDPlate(Adafruit_I2C):
@@ -461,33 +458,4 @@ class Adafruit_CharLCDPlate(Adafruit_I2C):
     def buttons(self):
         return self.i2c.readU8(self.MCP23017_GPIOA) & 0b11111
 
-
-    # ----------------------------------------------------------------------
-    # Test code
-
-if __name__ == '__main__':
-
-    lcd = Adafruit_CharLCDPlate()
-    lcd.begin(16, 2)
-    lcd.clear()
-    lcd.message("Adafruit RGB LCD\nPlate w/Keypad!")
-    sleep (3)
-    lcd.clear()
-    lcd.message ("nbre MAC device : \n")
-    lcd.setCursor(9,1)
-    lcd.message ("devices")
-    newest_file = path.realpath(max(glob.iglob('*.nettxt') ,key= path.getctime))
-    while True :
-        #newest_file = path.realpath(max(glob.iglob('*.nettxt') ,key= path.getctime))
-        sleep(5)
-        with open(newest_file ,"r") as f:
-            result = re.findall("MAC (..:..:..:..:..:..)",f.read())
-            unique = list(set(result))
-            nbre_mac = len(unique)
-        #lcd.clear()
-        #lcd.message ("nbre MAC device : \n")
-        lcd.setCursor(0,1)
-        lcd.message(str(nbre_mac))
-        #lcd.setCursor(9,1)
-        #lcd.message ("devices")
 
